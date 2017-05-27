@@ -1,0 +1,41 @@
+<resources>
+    <!-- Global strings -->
+    <string name="app_name">OwO Uploader</string>
+
+    <!-- MainActivity -->
+    <string name="file_default_title">Unknown File</string>
+    <string name="file_default_description">File not found</string>
+    <string name="file_preview">File preview</string>
+
+    <string name="upload_button_text">Upload File(s)</string>
+    <string name="shorten_button_text">Shorten URL</string>
+
+    <string name="history_title">Upload History</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <string name="url_not_set">URL not found!</string>
+    <string name="copied_to_clipboard">Copied to clipboard!</string>
+
+    <string name="dialog_open_file">Open</string>
+    <string name="dialog_copy_url">Copy URL</string>
+
+    <string name="ok">Ok</string>
+    <string name="error_title">Error</string>
+    <string name="error_message" formatted="false"><![CDATA[
+        Something went wrong while uploading your file(s)!<br><br>
+
+        <b>Expected response:</b> %d<br>
+        <b>Got:</b> %d<br>
+        <b>Error message:</b> %s]]>
+    </string>
+
+    <!-- General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_key">OwO API Key</string>
+    <string name="pref_description_key">Enter your OWO API key here</string>
+
+    <string name="pref_title_dark_theme">Dark Theme</string>
+    <string name="pref_description_dark_theme">Enable or disable the dark theme</string>
+</resources>

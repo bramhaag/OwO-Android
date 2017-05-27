@@ -1,0 +1,122 @@
+package me.bramhaag.owoandroid.listeners
+
+import android.app.AlertDialog
+import android.app.ProgressDialog
+import android.content.pm.PackageManager.PERMISSION_DENIED
+import android.net.Uri
+import android.support.design.widget.Snackbar
+import android.support.v4.app.ActivityCompat.*
+import android.support.v4.content.ContextCompat
+import android.text.Html
+import android.util.Log
+import android.view.View
+import me.bramhaag.owoandroid.activities.MainActivity
+import me.bramhaag.owoandroid.R
+import me.bramhaag.owoandroid.api.ProgressRequestBody
+import java.util.function.BiConsumer
+import okhttp3.MultipartBody
+import okhttp3.ResponseBody
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.*
+import android.content.*
+import me.bramhaag.owoandroid.components.UploadHistoryItem
+import java.net.URL
+
+
+class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
+
+    private val GALLERY_REQUEST = 0
+    private val mUploadQueue = LinkedList<Uri>()
+    lateinit var dialog: ProgressDialog
+
+    init {
+        activity.resultConsumerMap.put(GALLERY_REQUEST, BiConsumer({ _, data ->
+            dialog = ProgressDialog(activity).apply {
+                setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
+                setCancelable(false)
+                setCanceledOnTouchOutside(false)
+            }
+
+            if (data?.data != null) mUploadQueue.add(data.data)
+            else if (data?.clipData != null) (0..data.clipData.itemCount - 1).mapTo(mUploadQueue) { data.clipData.getItemAt(it).uri }
+
+            upload(mUploadQueue.first, 0, mUploadQueue.count())
+        }))
+    }
+
+    override fun onClick(v: View) {
+        requestPermissions(activity, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), 1)
+        if(ContextCompat.checkSelfPermission(activity, android.Manifest.permission.READ_EXTERNAL_STORAGE) == PERMISSION_DENIED) return
+
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+                    .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                    .setType("*/*")
+        startActivityForResult(activity, intent, GALLERY_REQUEST, null)
+    }
+
+    fun upload(uri: Uri, index: Int, total: Int) {
+        dialog.setTitle("Uploading... (${index + 1}/$total)")
+
+        val requestFile = ProgressRequestBody(uri, dialog)
+        val requestPart = MultipartBody.Part.createFormData("files[]", requestFile.name, requestFile)
+        val call = activity.owo.service.upload(requestPart)
+
+        //TODO String
+        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, activity.getString(android.R.string.cancel), { _, _ ->
+            call.cancel()
+            mUploadQueue.clear()
+            dialog.dismiss()
+        })
+
+        dialog.show()
+
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if(call.isCanceled || !response.isSuccessful) {
+                    dialog.dismiss()
+
+                    AlertDialog.Builder(activity)
+                            .setTitle(R.string.error_title)
+                            .setMessage(Html.fromHtml(activity.getString(R.string.error_message, 200, response.code(), response.errorBody()?.string())))
+                            .setPositiveButton(R.string.ok, { d, _ -> d.dismiss()})
+                            .create().show()
+                    return
+                }
+                Log.v("Upload", "success")
+
+                mUploadQueue.removeFirst()
+
+                val obj = JSONObject(response.body()?.string()).getJSONArray("files").getJSONObject(0)
+
+                //TODO custom urls
+                activity.mRecycleViewManager.addFile(obj.getString("name"), URL("https://owo.whats-th.is/" + obj.getString("url")), Date())
+
+                if(mUploadQueue.isNotEmpty()) {
+                    upload(mUploadQueue.first, index + 1, total)
+                    return
+                }
+
+                dialog.dismiss()
+                if(total > 1) {
+                    Snackbar.make(activity.findViewById(R.id.main_scroll_view), "$total files uploaded!", Snackbar.LENGTH_LONG).show()
+                } else {
+                    val url = Uri.parse("https://owo.whats-th.is/" + obj.getString("url"))
+
+                    Snackbar.make(activity.findViewById(R.id.main_scroll_view), "1 file uploaded", Snackbar.LENGTH_LONG)
+                            .setAction(R.string.dialog_open_file, { ContextCompat.startActivity(activity, Intent(Intent.ACTION_VIEW, url), null) })
+                            .show()
+
+                    (activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).primaryClip = ClipData.newPlainText(url.toString(), url.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("Upload error:", t.message)
+                t.printStackTrace()
+            }
+        })
+    }
+}

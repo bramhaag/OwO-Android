@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+    tools:context="me.bramhaag.owoandroid.activities.MainActivity">
+
+    <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true" android:id="@+id/main_scroll_view">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <Button
+                    android:text="@string/upload_button_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/upload_button"
+                    android:onClick="onUploadButtonClick"/>
+            <Button
+                    android:text="@string/shorten_button_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/shorten_button"
+                    android:onClick="onShortenButtonClick"/>
+
+            <TextView
+                    android:text="@string/history_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/history_text_view"
+                    android:textStyle="normal|bold" android:layout_marginTop="50dp" android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:id="@+id/button_expand_upload"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:windowBackground"
+                android:elevation="6dp"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="Upload History" />
+
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/expandable_layout_upload"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:el_duration="1000"
+                app:el_expanded="false"
+                app:el_parallax="0.5">
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/upload_recycler_view"
+                    android:clipToPadding="false"
+                    android:clickable="true"
+                    android:layout_weight="1.45">
+                </android.support.v7.widget.RecyclerView>
+
+            </net.cachapa.expandablelayout.ExpandableLayout>
+
+            <TextView
+                android:id="@+id/button_expand_shorten"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:windowBackground"
+                android:elevation="6dp"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center"
+                android:padding="16dp"
+                android:layout_marginTop="5dp"
+                android:text="Shortened URLs History" />
+
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/expandable_layout_shorten"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:el_duration="1000"
+                app:el_expanded="false"
+                app:el_parallax="0.5">
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/shorten_recycler_view"
+                    android:clipToPadding="false"
+                    android:clickable="true"
+                    android:layout_weight="1.45">
+                </android.support.v7.widget.RecyclerView>
+
+            </net.cachapa.expandablelayout.ExpandableLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>
