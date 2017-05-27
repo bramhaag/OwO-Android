@@ -1,9 +1,5 @@
 package me.bramhaag.owoandroid.activities
 
-import android.os.Bundle
-import android.preference.PreferenceFragment
-import android.support.v7.app.AppCompatActivity
-
 class SettingsActivity : android.support.v7.app.AppCompatActivity() {
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)

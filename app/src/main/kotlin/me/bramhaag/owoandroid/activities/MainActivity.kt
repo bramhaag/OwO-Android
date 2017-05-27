@@ -1,12 +1,15 @@
 package me.bramhaag.owoandroid.activities
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
+import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
 import me.bramhaag.owoandroid.R
 import me.bramhaag.owoandroid.api.OwO
 import me.bramhaag.owoandroid.data.files.FilesDbHelper
@@ -38,7 +41,26 @@ class MainActivity : AppCompatActivity() {
         urlDbHelper = UrlDbHelper(this)
 
         //TODO force to set key
-        owo = OwO(PreferenceManager.getDefaultSharedPreferences(this).getString("pref_key", "Invalid Key"))
+        val key = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_key", null)
+        if(key == null || key.isBlank()) {
+            AlertDialog.Builder(this).apply {
+                val input = EditText(this@MainActivity).apply {
+                    inputType = InputType.TYPE_TEXT_VARIATION_LONG_MESSAGE
+                    hint = "OwO API Key"
+                    setSingleLine()
+                }
+
+                setTitle("Enter OwO API Key")
+                setView(input)
+
+                setPositiveButton("Continue", { dialog, _ ->
+                    PreferenceManager.getDefaultSharedPreferences(this@MainActivity).edit().putString("pref_key", input.text.toString()).apply()
+                    dialog.cancel()
+
+                    owo = OwO(PreferenceManager.getDefaultSharedPreferences(this@MainActivity).getString("pref_key", null))
+                })
+            }.show()
+        } else owo = OwO(key)
 
         findViewById(R.id.upload_button).setOnClickListener(UploadButtonListener(this))
         findViewById(R.id.shorten_button).setOnClickListener(ShortenButtonListener(this))

@@ -4,13 +4,13 @@ import android.app.ProgressDialog
 import android.content.ContentResolver
 import android.net.Uri
 import android.os.Handler
-import okhttp3.MediaType
-import okio.BufferedSink
-import okhttp3.RequestBody
-import java.io.IOException
 import android.os.Looper
 import android.provider.OpenableColumns
 import me.bramhaag.owoandroid.util.ByteUnit
+import okhttp3.MediaType
+import okhttp3.RequestBody
+import okio.BufferedSink
+import java.io.IOException
 import java.text.DecimalFormat
 
 class ProgressRequestBody(private val mUri: Uri, private val mProgressDialog: ProgressDialog) : RequestBody() {
