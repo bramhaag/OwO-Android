@@ -1,23 +1,23 @@
 package me.bramhaag.owoandroid.activities
 
-import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.content.Intent
+import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
-import android.widget.Button
+import android.view.Menu
+import android.view.MenuItem
 import me.bramhaag.owoandroid.R
 import me.bramhaag.owoandroid.api.OwO
 import me.bramhaag.owoandroid.data.files.FilesDbHelper
 import me.bramhaag.owoandroid.data.urls.UrlDbHelper
 import me.bramhaag.owoandroid.listeners.ShortenButtonListener
+import me.bramhaag.owoandroid.listeners.ShortenExpandableLayoutListener
 import me.bramhaag.owoandroid.listeners.UploadButtonListener
+import me.bramhaag.owoandroid.listeners.UploadExpandableLayoutListener
 import me.bramhaag.owoandroid.managers.RecyclerViewManager
 import net.cachapa.expandablelayout.ExpandableLayout
 import java.util.function.BiConsumer
-import kotlin.collections.HashMap
 
 
 class MainActivity : AppCompatActivity() {
@@ -40,16 +40,11 @@ class MainActivity : AppCompatActivity() {
         //TODO force to set key
         owo = OwO(PreferenceManager.getDefaultSharedPreferences(this).getString("pref_key", "Invalid Key"))
 
-        (findViewById(R.id.upload_button) as Button).setOnClickListener(UploadButtonListener(this))
-        (findViewById(R.id.shorten_button) as Button).setOnClickListener(ShortenButtonListener(this))
+        findViewById(R.id.upload_button).setOnClickListener(UploadButtonListener(this))
+        findViewById(R.id.shorten_button).setOnClickListener(ShortenButtonListener(this))
 
-        findViewById(R.id.button_expand_upload).setOnClickListener({
-            (findViewById(R.id.expandable_layout_upload) as ExpandableLayout).let { if (it.isExpanded) it.collapse() else it.expand() }
-        })
-
-        findViewById(R.id.button_expand_shorten).setOnClickListener({
-            (findViewById(R.id.expandable_layout_shorten) as ExpandableLayout).let { if (it.isExpanded) it.collapse() else it.expand() }
-        })
+        findViewById(R.id.button_expand_upload).setOnClickListener(UploadExpandableLayoutListener(findViewById(R.id.expandable_layout_upload) as ExpandableLayout, findViewById(R.id.expandable_layout_shorten) as ExpandableLayout))
+        findViewById(R.id.button_expand_shorten).setOnClickListener(ShortenExpandableLayoutListener(findViewById(R.id.expandable_layout_upload) as ExpandableLayout, findViewById(R.id.expandable_layout_shorten) as ExpandableLayout))
 
         mRecycleViewManager = RecyclerViewManager(findViewById(R.id.upload_recycler_view) as RecyclerView, findViewById(R.id.shorten_recycler_view) as RecyclerView, applicationContext)
     }

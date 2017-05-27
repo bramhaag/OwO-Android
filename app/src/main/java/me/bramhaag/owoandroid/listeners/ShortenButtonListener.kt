@@ -1,15 +1,17 @@
 package me.bramhaag.owoandroid.listeners
 
-import android.view.View
-import me.bramhaag.owoandroid.activities.MainActivity
 import android.app.AlertDialog
 import android.text.InputType
+import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import me.bramhaag.owoandroid.activities.MainActivity
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.net.URL
+import java.util.*
 
 
 class ShortenButtonListener(val activity: MainActivity): View.OnClickListener {
@@ -27,7 +29,6 @@ class ShortenButtonListener(val activity: MainActivity): View.OnClickListener {
             setView(input)
 
             setPositiveButton("OK", { dialog, _ ->
-                //val m_Text = input.text.toString()
                 dialog.cancel()
 
                 AlertDialog.Builder(activity).apply {
@@ -39,13 +40,16 @@ class ShortenButtonListener(val activity: MainActivity): View.OnClickListener {
                         //200 = expected
                         //400 = bad url
                         //401 = bad token
-                        activity.owo.service.shorten(input.text.toString()).enqueue(object : Callback<ResponseBody> {
+                        val originalUrl = input.text.toString()
+                        activity.owo.service.shorten(originalUrl).enqueue(object : Callback<ResponseBody> {
                             //TODO checks
                             override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
                                 println("code: ${response?.code()}")
                                 println("error: ${response?.errorBody()?.string()}")
                                 //println("response: ${response?.body()?.string()}")
-                                text = response?.body()?.string()
+                                val shortenedUrl = response?.body()?.string()
+                                text = shortenedUrl
+                                activity.mRecycleViewManager.addUrl(URL(originalUrl), URL(shortenedUrl), Date())
                             }
 
                             override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {

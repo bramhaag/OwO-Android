@@ -34,7 +34,7 @@ class UrlDbHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME, nu
 
             do add(Triple(
                     URL(it.getString(it.getColumnIndex(UrlContract.UrlEntry.COLUMN_NAME_ORIGINAL_URL))),
-                    URL(it.getString(it.getColumnIndex(UrlContract.UrlEntry.COLUMN_NAME_ORIGINAL_URL))),
+                    URL(it.getString(it.getColumnIndex(UrlContract.UrlEntry.COLUMN_NAME_SHORTENED_URL))),
                     Date(it.getLong(it.getColumnIndex(UrlContract.UrlEntry.COLUMN_NAME_DATE)))
             ))
             while (it.moveToNext())

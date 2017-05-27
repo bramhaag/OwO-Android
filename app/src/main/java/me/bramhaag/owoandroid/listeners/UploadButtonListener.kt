@@ -2,28 +2,28 @@ package me.bramhaag.owoandroid.listeners
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.*
 import android.content.pm.PackageManager.PERMISSION_DENIED
 import android.net.Uri
 import android.support.design.widget.Snackbar
-import android.support.v4.app.ActivityCompat.*
+import android.support.v4.app.ActivityCompat.requestPermissions
+import android.support.v4.app.ActivityCompat.startActivityForResult
 import android.support.v4.content.ContextCompat
 import android.text.Html
 import android.util.Log
 import android.view.View
-import me.bramhaag.owoandroid.activities.MainActivity
 import me.bramhaag.owoandroid.R
+import me.bramhaag.owoandroid.activities.MainActivity
 import me.bramhaag.owoandroid.api.ProgressRequestBody
-import java.util.function.BiConsumer
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
-import android.content.*
-import me.bramhaag.owoandroid.components.UploadHistoryItem
 import java.net.URL
+import java.util.*
+import java.util.function.BiConsumer
 
 
 class UploadButtonListener(val activity: MainActivity): View.OnClickListener {

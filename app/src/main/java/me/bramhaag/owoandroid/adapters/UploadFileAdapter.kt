@@ -10,14 +10,15 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import me.bramhaag.owoandroid.R
 import me.bramhaag.owoandroid.components.UploadHistoryItem
+import me.bramhaag.owoandroid.listeners.UploadHistoryItemListener
 import java.net.URL
-import me.bramhaag.owoandroid.listeners.CardListener
 import java.text.SimpleDateFormat
+import java.util.*
 
 
 class UploadFileAdapter(var files: List<UploadHistoryItem>, var context: Context) : RecyclerView.Adapter<UploadFileAdapter.FileViewHolder>() {
 
-    val dateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm")
+    val dateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault())
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int) = FileViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.upload_history_item, parent, false))
 
@@ -49,8 +50,8 @@ class UploadFileAdapter(var files: List<UploadHistoryItem>, var context: Context
             description = itemView.findViewById(R.id.upload_item_description) as TextView
             image = itemView.findViewById(R.id.upload_item_image) as ImageView
 
-            itemView.setOnClickListener(CardListener(this))
-            itemView.setOnLongClickListener(CardListener(this))
+            itemView.setOnClickListener(UploadHistoryItemListener(this))
+            itemView.setOnLongClickListener(UploadHistoryItemListener(this))
         }
     }
 }

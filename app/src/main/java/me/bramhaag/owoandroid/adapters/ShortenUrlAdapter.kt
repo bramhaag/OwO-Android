@@ -2,32 +2,48 @@ package me.bramhaag.owoandroid.adapters
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.TextView
+import me.bramhaag.owoandroid.R
 import me.bramhaag.owoandroid.components.ShortenHistoryItem
+import me.bramhaag.owoandroid.listeners.ShortenHistoryItemListener
+import java.net.URL
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ShortenUrlAdapter(var urls: List<ShortenHistoryItem>, var context: Context) : RecyclerView.Adapter<ShortenUrlAdapter.UrlViewHolder>() {
 
-    val dateFormat = java.text.SimpleDateFormat("dd-MM-yyyy HH:mm")
+    val dateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault())
 
-    override fun onCreateViewHolder(parent: android.view.ViewGroup?, viewType: Int) = UrlViewHolder(android.view.LayoutInflater.from(parent?.context).inflate(me.bramhaag.owoandroid.R.layout.upload_history_item, parent, false))
+    override fun onCreateViewHolder(parent: android.view.ViewGroup?, viewType: Int) = UrlViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.shorten_history_item, parent, false))
 
     override fun getItemCount() = urls.size
 
-    //TODO use run? idk
-    override fun onBindViewHolder(holder: me.bramhaag.owoandroid.adapters.ShortenUrlAdapter.UrlViewHolder, position: Int) =
+    override fun onBindViewHolder(holder: ShortenUrlAdapter.UrlViewHolder, position: Int) =
             urls[position].run {
-                holder.title.text = originalUrl.toString()
+                holder.originalUrl.text = originalUrl.toString()
                 holder.description.text = "$shortenedUrl - ${dateFormat.format(date)}"
+
+                holder.shortenedUrl = shortenedUrl
             }
 
-    inner class UrlViewHolder(itemView: android.view.View) : android.support.v7.widget.RecyclerView.ViewHolder(itemView) {
-        var title: android.widget.TextView
-        var description: android.widget.TextView
+    inner class UrlViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var originalUrl: TextView
+        var description: TextView
+
+        lateinit var shortenedUrl: URL
 
         init {
             itemView.tag = this
-            title = itemView.findViewById(me.bramhaag.owoandroid.R.id.shorten_item_title) as android.widget.TextView
-            description = itemView.findViewById(me.bramhaag.owoandroid.R.id.shorten_item_title) as android.widget.TextView
+            originalUrl = itemView.findViewById(R.id.shorten_item_original_url) as TextView
+            description = itemView.findViewById(R.id.shorten_item_shortened_url) as TextView
+
+            itemView.setOnClickListener(ShortenHistoryItemListener(this))
+            itemView.setOnLongClickListener(ShortenHistoryItemListener(this))
         }
+
+
     }
 }

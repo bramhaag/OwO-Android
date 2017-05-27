@@ -1,16 +1,19 @@
 package me.bramhaag.owoandroid.listeners
 
 import android.app.AlertDialog
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.support.v4.content.ContextCompat.startActivity
 import android.view.View
 import android.widget.Toast
-import android.content.*
-import me.bramhaag.owoandroid.adapters.UploadFileAdapter
 import me.bramhaag.owoandroid.R
+import me.bramhaag.owoandroid.adapters.UploadFileAdapter
 
 
-class CardListener(val file: UploadFileAdapter.FileViewHolder): View.OnClickListener, View.OnLongClickListener {
+class UploadHistoryItemListener(val file: UploadFileAdapter.FileViewHolder): View.OnClickListener, View.OnLongClickListener {
 
     override fun onClick(v: View) {
         if(file.url == null) Toast.makeText(v.context, v.context.getString(R.string.url_not_set), Toast.LENGTH_SHORT).show()
