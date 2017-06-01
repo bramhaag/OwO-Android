@@ -1,6 +1,5 @@
 package me.bramhaag.owoandroid.activities
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -9,7 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.EditText
+import com.afollestad.materialdialogs.MaterialDialog
 import me.bramhaag.owoandroid.R
 import me.bramhaag.owoandroid.api.OwO
 import me.bramhaag.owoandroid.data.files.FilesDbHelper
@@ -40,26 +39,24 @@ class MainActivity : AppCompatActivity() {
         filesDbHelper = FilesDbHelper(this)
         urlDbHelper = UrlDbHelper(this)
 
-        //TODO force to set key
         val key = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_key", null)
         if(key == null || key.isBlank()) {
-            AlertDialog.Builder(this).apply {
-                val input = EditText(this@MainActivity).apply {
-                    inputType = InputType.TYPE_TEXT_VARIATION_LONG_MESSAGE
-                    hint = "OwO API Key"
-                    setSingleLine()
-                }
-
-                setTitle("Enter OwO API Key")
-                setView(input)
-
-                setPositiveButton("Continue", { dialog, _ ->
-                    PreferenceManager.getDefaultSharedPreferences(this@MainActivity).edit().putString("pref_key", input.text.toString()).apply()
-                    dialog.cancel()
-
-                    owo = OwO(PreferenceManager.getDefaultSharedPreferences(this@MainActivity).getString("pref_key", null))
-                })
-            }.show()
+            MaterialDialog.Builder(this)
+                    .title("Welcome")
+                    .content("Please enter your OwO API key to continue")
+                    .positiveText("Continue")
+                    .inputType(InputType.TYPE_CLASS_TEXT)
+                    .input("Enter your OwO Key here", null, false, { _, _ -> })
+                    .checkBoxPrompt("Send crash logs", true, { _, isChecked -> PreferenceManager.getDefaultSharedPreferences(this@MainActivity).edit().putBoolean("acra.disable", isChecked).apply() })
+                    .onPositive { dialog, _ ->
+                        val prefKey = dialog.inputEditText?.text.toString()
+                        PreferenceManager.getDefaultSharedPreferences(this@MainActivity).edit().putString("pref_key", prefKey).apply()
+                        owo = OwO(prefKey)
+                    }
+                    .cancelable(false)
+                    .canceledOnTouchOutside(false)
+                    .autoDismiss(true)
+                    .show()
         } else owo = OwO(key)
 
         findViewById(R.id.upload_button).setOnClickListener(UploadButtonListener(this))

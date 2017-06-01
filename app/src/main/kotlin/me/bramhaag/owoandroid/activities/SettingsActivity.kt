@@ -1,11 +1,17 @@
 package me.bramhaag.owoandroid.activities
 
-class SettingsActivity : android.support.v7.app.AppCompatActivity() {
+import android.preference.PreferenceFragment
+import android.support.v7.app.AppCompatActivity
+
+class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
 
+        println(applicationInfo.theme)
+        println(resources.getResourceName(applicationInfo.theme))
+
         fragmentManager.beginTransaction()
-                .replace(android.R.id.content, me.bramhaag.owoandroid.activities.SettingsActivity.SettingsFragment())
+                .replace(android.R.id.content, SettingsFragment())
                 .commit()
 
         /*SharedPreferences.OnSharedPreferenceChangeListener({ preferences, key ->
@@ -24,7 +30,7 @@ class SettingsActivity : android.support.v7.app.AppCompatActivity() {
         })*/
     }
 
-    class SettingsFragment : android.preference.PreferenceFragment() {
+    class SettingsFragment : PreferenceFragment() {
 
         override fun onCreate(savedInstanceState: android.os.Bundle?) {
             super.onCreate(savedInstanceState)

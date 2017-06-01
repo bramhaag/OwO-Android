@@ -6,10 +6,10 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "me.bramhaag.owoandroid"
-        minSdkVersion 23
+        minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -20,7 +20,13 @@ android {
     }
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_6
+        targetCompatibility JavaVersion.VERSION_1_6
         sourceCompatibility JavaVersion.VERSION_1_6
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/java'
     }
 }
 
@@ -35,10 +41,12 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$support_version"
     compile "com.android.support:support-v4:$support_version"
     compile "com.android.support:design:$support_version"
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile 'com.github.bumptech.glide:glide:3.8.0'
     compile 'net.cachapa.expandablelayout:expandablelayout:2.9.1'
+    compile 'com.afollestad.material-dialogs:core:0.9.4.5'
     compile "com.squareup.retrofit2:retrofit:$retrofit_version"
+    compile 'ch.acra:acra:4.9.2'
 
     testCompile 'junit:junit:4.12'
 }

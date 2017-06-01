@@ -78,17 +78,21 @@ class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
                 if(call.isCanceled || !response.isSuccessful) {
                     dialog.dismiss()
 
+                    val message =
+                            if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
+                                Html.fromHtml(activity.getString(R.string.error_message, 200, response.code(), response.errorBody()?.string()), Html.FROM_HTML_MODE_LEGACY)
+                            else
+                                Html.fromHtml(activity.getString(R.string.error_message, 200, response.code(), response.errorBody()?.string()))
+
                     AlertDialog.Builder(activity)
                             .setTitle(R.string.error_title)
-                            .setMessage(Html.fromHtml(activity.getString(R.string.error_message, 200, response.code(), response.errorBody()?.string())))
+                            .setMessage(message)
                             .setPositiveButton(R.string.ok, { d, _ -> d.dismiss()})
                             .create().show()
                     return
                 }
-                Log.v("Upload", "success")
 
                 mUploadQueue.removeFirst()
-
                 val obj = JSONObject(response.body()?.string()).getJSONArray("files").getJSONObject(0)
 
                 //TODO custom urls
