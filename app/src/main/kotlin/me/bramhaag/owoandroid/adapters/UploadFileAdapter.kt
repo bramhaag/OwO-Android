@@ -17,7 +17,6 @@ import java.util.*
 
 
 class UploadFileAdapter(var files: List<UploadHistoryItem>, var context: Context) : RecyclerView.Adapter<UploadFileAdapter.FileViewHolder>() {
-
     val dateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault())
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int) = FileViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.upload_history_item, parent, false))
@@ -25,24 +24,23 @@ class UploadFileAdapter(var files: List<UploadHistoryItem>, var context: Context
     override fun getItemCount() = files.size
 
     override fun onBindViewHolder(holder: FileViewHolder, position: Int) {
-        val file = files[position]
-
-        holder.title.text = file.name
-        holder.description.text = "${file.url?.host} - ${dateFormat.format(file.date)}"
-        holder.url = file.url
-        Glide.with(context)
-                .load(file.url.toString())
-                .fitCenter()
-                .placeholder(R.drawable.not_found)
-                .into(holder.image)
-
+         files[position].run {
+             holder.title.text = name
+             holder.description.text = "${url.host} - ${dateFormat.format(date)}"
+             holder.url = url
+             Glide.with(context)
+                     .load(url.toString())
+                     .fitCenter()
+                     .placeholder(R.drawable.not_found)
+                     .into(holder.image)
+         }
     }
 
     inner class FileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title: TextView
         var description: TextView
         var image: ImageView
-        var url: URL? = null
+        lateinit var url: URL
 
         init {
             itemView.tag = this

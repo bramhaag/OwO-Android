@@ -13,21 +13,6 @@ class SettingsActivity : AppCompatActivity() {
         fragmentManager.beginTransaction()
                 .replace(android.R.id.content, SettingsFragment())
                 .commit()
-
-        /*SharedPreferences.OnSharedPreferenceChangeListener({ preferences, key ->
-            when(key) {
-                "pref_key" -> {
-                    (findViewById(android.R.id.content) as MainActivity).owo = OwO(preferences.getString(key, null))
-                }
-                "pref_theme" -> {
-                    if(preferences.getBoolean("pref_theme", false)) {
-                        activity.setTheme(android.R.style.Theme_Material)
-                    } else {
-                        activity.setTheme(android.R.style.Theme_Material_Light)
-                    }
-                }
-            }
-        })*/
     }
 
     class SettingsFragment : PreferenceFragment() {

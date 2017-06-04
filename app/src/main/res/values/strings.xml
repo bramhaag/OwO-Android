@@ -22,9 +22,18 @@
 
     <string name="ok">OK</string>
     <string name="error_title">Error</string>
-    <string name="error_message" formatted="false"><![CDATA[
+    <string name="upload_error_message" formatted="false"><![CDATA[
         Something went wrong while uploading your file(s)!<br><br>
 
+        <b>Expected response:</b> %d<br>
+        <b>Got:</b> %d<br>
+        <b>Error message:</b> %s]]>
+    </string>
+
+    <string name="shorten_error_message" formatted="false"><![CDATA[
+        Something went wrong while shortening your URL!<br><br>
+
+        <b>URL:</b> %s<br>
         <b>Expected response:</b> %d<br>
         <b>Got:</b> %d<br>
         <b>Error message:</b> %s]]>
@@ -39,4 +48,5 @@
     <string name="pref_title_dark_theme">Dark Theme</string>
     <string name="pref_description_dark_theme">Enable or disable the dark theme</string>
     <string name="crash_toast_text">OwO Uploader has crashed</string>
+    <string name="menu_item_delete">Delete</string>
 </resources>

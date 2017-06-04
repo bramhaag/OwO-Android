@@ -15,10 +15,7 @@ import me.bramhaag.owoandroid.adapters.UploadFileAdapter
 
 class UploadHistoryItemListener(val file: UploadFileAdapter.FileViewHolder): View.OnClickListener, View.OnLongClickListener {
 
-    override fun onClick(v: View) {
-        if(file.url == null) Toast.makeText(v.context, v.context.getString(R.string.url_not_set), Toast.LENGTH_SHORT).show()
-        else startActivity(v.context, Intent(Intent.ACTION_VIEW, Uri.parse(file.url.toString())), null)
-    }
+    override fun onClick(v: View) = startActivity(v.context, Intent(Intent.ACTION_VIEW, Uri.parse(file.url.toString())), null)
 
     override fun onLongClick(v: View): Boolean {
         AlertDialog.Builder(v.context)
@@ -26,9 +23,7 @@ class UploadHistoryItemListener(val file: UploadFileAdapter.FileViewHolder): Vie
                     when(item) {
                         0 -> startActivity(v.context, Intent(Intent.ACTION_VIEW, Uri.parse(file.url.toString())), null)
                         1 -> {
-                            val clipboard = v.context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                            clipboard.primaryClip = ClipData.newPlainText(file.url.toString(), file.url.toString())
-
+                            (v.context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).primaryClip = ClipData.newPlainText(file.url.toString(), file.url.toString())
                             Toast.makeText(v.context, v.context.getString(R.string.copied_to_clipboard), Toast.LENGTH_SHORT).show()
                         }
                     }

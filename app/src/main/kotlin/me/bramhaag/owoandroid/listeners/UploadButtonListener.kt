@@ -1,6 +1,5 @@
 package me.bramhaag.owoandroid.listeners
 
-import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.*
 import android.content.pm.PackageManager.PERMISSION_DENIED
@@ -12,6 +11,7 @@ import android.support.v4.content.ContextCompat
 import android.text.Html
 import android.util.Log
 import android.view.View
+import com.afollestad.materialdialogs.MaterialDialog
 import me.bramhaag.owoandroid.R
 import me.bramhaag.owoandroid.activities.MainActivity
 import me.bramhaag.owoandroid.api.ProgressRequestBody
@@ -40,8 +40,8 @@ class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
                 setCanceledOnTouchOutside(false)
             }
 
-            if (data?.data != null) mUploadQueue.add(data.data)
-            else if (data?.clipData != null) (0..data.clipData.itemCount - 1).mapTo(mUploadQueue) { data.clipData.getItemAt(it).uri }
+            if(data?.data != null) mUploadQueue.add(data.data)
+            else if(data?.clipData != null) (0..data.clipData.itemCount - 1).mapTo(mUploadQueue) { data.clipData.getItemAt(it).uri }
 
             upload(mUploadQueue.first, 0, mUploadQueue.count())
         }))
@@ -64,7 +64,6 @@ class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
         val requestPart = MultipartBody.Part.createFormData("files[]", requestFile.name, requestFile)
         val call = activity.owo.service.upload(requestPart)
 
-        //TODO String
         dialog.setButton(DialogInterface.BUTTON_NEGATIVE, activity.getString(android.R.string.cancel), { _, _ ->
             call.cancel()
             mUploadQueue.clear()
@@ -78,17 +77,16 @@ class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
                 if(call.isCanceled || !response.isSuccessful) {
                     dialog.dismiss()
 
-                    val message =
-                            if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
-                                Html.fromHtml(activity.getString(R.string.error_message, 200, response.code(), response.errorBody()?.string()), Html.FROM_HTML_MODE_LEGACY)
-                            else
-                                Html.fromHtml(activity.getString(R.string.error_message, 200, response.code(), response.errorBody()?.string()))
-
-                    AlertDialog.Builder(activity)
-                            .setTitle(R.string.error_title)
-                            .setMessage(message)
-                            .setPositiveButton(R.string.ok, { d, _ -> d.dismiss()})
-                            .create().show()
+                    MaterialDialog.Builder(activity)
+                            .title(R.string.error_title)
+                            .content(
+                                    if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
+                                        Html.fromHtml(activity.getString(R.string.upload_error_message, 200, response.code(), response.errorBody()?.string()), Html.FROM_HTML_MODE_LEGACY)
+                                    else
+                                        Html.fromHtml(activity.getString(R.string.upload_error_message, 200, response.code(), response.errorBody()?.string()))
+                            )
+                            .positiveText(R.string.ok)
+                            .show()
                     return
                 }
 

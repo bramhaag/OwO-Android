@@ -30,6 +30,8 @@ class RecyclerViewManager(var mUploadView: RecyclerView, var mShortenView: Recyc
             layoutManager = LinearLayoutManager(mContext)
             adapter = ShortenUrlAdapter(urls, mContext)
         }
+
+
     }
 
     fun addFile(name: String, url: URL, date: Date) {

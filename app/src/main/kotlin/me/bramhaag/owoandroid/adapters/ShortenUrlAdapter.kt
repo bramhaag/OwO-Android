@@ -25,14 +25,12 @@ class ShortenUrlAdapter(var urls: List<ShortenHistoryItem>, var context: Context
             urls[position].run {
                 holder.originalUrl.text = originalUrl.toString()
                 holder.description.text = "$shortenedUrl - ${dateFormat.format(date)}"
-
                 holder.shortenedUrl = shortenedUrl
             }
 
     inner class UrlViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var originalUrl: TextView
         var description: TextView
-
         lateinit var shortenedUrl: URL
 
         init {

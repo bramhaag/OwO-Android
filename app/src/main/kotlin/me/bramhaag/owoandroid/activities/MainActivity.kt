@@ -13,10 +13,9 @@ import me.bramhaag.owoandroid.R
 import me.bramhaag.owoandroid.api.OwO
 import me.bramhaag.owoandroid.data.files.FilesDbHelper
 import me.bramhaag.owoandroid.data.urls.UrlDbHelper
+import me.bramhaag.owoandroid.listeners.ExpandableLayoutListener
 import me.bramhaag.owoandroid.listeners.ShortenButtonListener
-import me.bramhaag.owoandroid.listeners.ShortenExpandableLayoutListener
 import me.bramhaag.owoandroid.listeners.UploadButtonListener
-import me.bramhaag.owoandroid.listeners.UploadExpandableLayoutListener
 import me.bramhaag.owoandroid.managers.RecyclerViewManager
 import net.cachapa.expandablelayout.ExpandableLayout
 import java.util.function.BiConsumer
@@ -62,8 +61,10 @@ class MainActivity : AppCompatActivity() {
         findViewById(R.id.upload_button).setOnClickListener(UploadButtonListener(this))
         findViewById(R.id.shorten_button).setOnClickListener(ShortenButtonListener(this))
 
-        findViewById(R.id.button_expand_upload).setOnClickListener(UploadExpandableLayoutListener(findViewById(R.id.expandable_layout_upload) as ExpandableLayout, findViewById(R.id.expandable_layout_shorten) as ExpandableLayout))
-        findViewById(R.id.button_expand_shorten).setOnClickListener(ShortenExpandableLayoutListener(findViewById(R.id.expandable_layout_upload) as ExpandableLayout, findViewById(R.id.expandable_layout_shorten) as ExpandableLayout))
+        val expandableLayoutListener = ExpandableLayoutListener(findViewById(R.id.expandable_layout_upload) as ExpandableLayout, findViewById(R.id.expandable_layout_shorten) as ExpandableLayout)
+        findViewById(R.id.button_expand_upload).setOnClickListener(expandableLayoutListener)
+        findViewById(R.id.button_expand_shorten).setOnClickListener(expandableLayoutListener)
+
 
         mRecycleViewManager = RecyclerViewManager(findViewById(R.id.upload_recycler_view) as RecyclerView, findViewById(R.id.shorten_recycler_view) as RecyclerView, applicationContext)
     }
