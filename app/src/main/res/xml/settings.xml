@@ -10,6 +10,17 @@
             android:singleLine="true"
             android:maxLines="1"/>
 
+    <EditTextPreference
+        android:key="pref_destination"
+        android:title="@string/pref_title_destination"
+        android:summary="@string/pref_description_destination"
+        android:selectAllOnFocus="true"
+        android:inputType="textUri"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:hint="@string/pref_hint_destination"
+        android:text="owo.whats-th.is"/>
+
     <SwitchPreference
             android:key="pref_dark_theme"
             android:title="@string/pref_title_dark_theme"

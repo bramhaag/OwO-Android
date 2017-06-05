@@ -82,4 +82,7 @@
     <string name="pref_title_dark_theme">Dark Theme</string>
     <string name="pref_description_dark_theme">Enable or disable the dark theme</string>
     <string name="menu_item_delete">Delete</string>
+    <string name="pref_title_destination">Upload Destination</string>
+    <string name="pref_description_destination">Set your upload destination here</string>
+    <string name="pref_hint_destination">https://my-url.com</string>
 </resources>

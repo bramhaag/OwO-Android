@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.content.*
 import android.content.pm.PackageManager.PERMISSION_DENIED
 import android.net.Uri
+import android.preference.PreferenceManager
 import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat.requestPermissions
 import android.support.v4.app.ActivityCompat.startActivityForResult
@@ -93,9 +94,7 @@ class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
 
                 mUploadQueue.removeFirst()
                 val obj = JSONObject(response.body()?.string()).getJSONArray("files").getJSONObject(0)
-
-                //TODO custom urls
-                activity.mRecycleViewManager.addFile(obj.getString("name"), URL("https://owo.whats-th.is/" + obj.getString("url")), Date())
+                activity.mRecycleViewManager.addFile(obj.getString("name"), URL("${PreferenceManager.getDefaultSharedPreferences(activity).getString("pref_destination", "https://owo.whats-th.is")}/${obj.getString("url")}"), Date())
 
                 if(mUploadQueue.isNotEmpty()) {
                     upload(mUploadQueue.first, index + 1, total)
