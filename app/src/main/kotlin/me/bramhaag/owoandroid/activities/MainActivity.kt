@@ -17,14 +17,13 @@ import me.bramhaag.owoandroid.listeners.ExpandableLayoutListener
 import me.bramhaag.owoandroid.listeners.ShortenButtonListener
 import me.bramhaag.owoandroid.listeners.UploadButtonListener
 import me.bramhaag.owoandroid.managers.RecyclerViewManager
+import me.bramhaag.owoandroid.util.Consumer
 import net.cachapa.expandablelayout.ExpandableLayout
-import java.util.function.BiConsumer
-
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var owo: OwO
-    val resultConsumerMap = HashMap<Int, BiConsumer<Int, Intent?>>()
+    val resultConsumerMap = HashMap<Int, Consumer<Intent?>>()
 
     lateinit var filesDbHelper: FilesDbHelper
     lateinit var urlDbHelper: UrlDbHelper
@@ -85,6 +84,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        resultConsumerMap[requestCode]?.accept(resultCode, data)
+        resultConsumerMap[requestCode]?.accept(data)
     }
 }

@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import me.bramhaag.owoandroid.R
 import me.bramhaag.owoandroid.activities.MainActivity
 import me.bramhaag.owoandroid.api.ProgressRequestBody
+import me.bramhaag.owoandroid.util.Consumer
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -24,8 +25,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.net.URL
 import java.util.*
-import java.util.function.BiConsumer
-
 
 class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
 
@@ -34,18 +33,20 @@ class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
     lateinit var dialog: ProgressDialog
 
     init {
-        activity.resultConsumerMap.put(GALLERY_REQUEST, BiConsumer({ _, data ->
-            dialog = ProgressDialog(activity).apply {
-                setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
-                setCancelable(false)
-                setCanceledOnTouchOutside(false)
+        activity.resultConsumerMap.put(GALLERY_REQUEST, object : Consumer<Intent?> {
+            override fun accept(t: Intent?) {
+                dialog = ProgressDialog(activity).apply {
+                    setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
+                    setCancelable(false)
+                    setCanceledOnTouchOutside(false)
+                }
+
+                if(t?.data != null) mUploadQueue.add(t.data)
+                else if(t?.clipData != null) (0..t.clipData.itemCount - 1).mapTo(mUploadQueue) { t.clipData.getItemAt(it).uri }
+
+                upload(mUploadQueue.first, 0, mUploadQueue.count())
             }
-
-            if(data?.data != null) mUploadQueue.add(data.data)
-            else if(data?.clipData != null) (0..data.clipData.itemCount - 1).mapTo(mUploadQueue) { data.clipData.getItemAt(it).uri }
-
-            upload(mUploadQueue.first, 0, mUploadQueue.count())
-        }))
+        })
     }
 
     override fun onClick(v: View) {
@@ -121,4 +122,22 @@ class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
             }
         })
     }
+
+    /*
+    java.lang.NoClassDefFoundError: me.bramhaag.owoandroid.listeners.UploadButtonListener$1
+          at me.bramhaag.owoandroid.listeners.UploadButtonListener.<init>(UploadButtonListener.kt:37)
+          at me.bramhaag.owoandroid.activities.MainActivity.onCreate(MainActivity.kt:61)
+          at android.app.Activity.performCreate(Activity.java:6237)
+          at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1107)
+          at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2369)
+          at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2476)
+          at android.app.ActivityThread.-wrap11(ActivityThread.java)
+          at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1344)
+          at android.os.Handler.dispatchMessage(Handler.java:102)
+          at android.os.Looper.loop(Looper.java:148)
+          at android.app.ActivityThread.main(ActivityThread.java:5417)
+          at java.lang.reflect.Method.invoke(Native Method)
+          at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:726)
+          at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:616)
+     */
 }
