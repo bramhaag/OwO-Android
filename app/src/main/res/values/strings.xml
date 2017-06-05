@@ -52,7 +52,7 @@
     <string name="dialog_shorten_result_content">Loading…</string>
 
     <string name="dialog_shorten_error_content">Invalid URL</string>
-    <string name="dialog_upload_title">Uploading… (%d / %d)</string>
+    <string name="dialog_upload_title" formatted="false">Uploading… (%d / %d)</string>
 
     <string name="dialog_button_continue">Continue</string>
     <string name="dialog_button_cancel">Cancel</string>
@@ -62,7 +62,7 @@
 
     <!-- Snackbars -->
     <string name="snackbar_upload_single_content">1 file uploaded</string>
-    <string name="snackbar_upload_multi_content">%d files uploaded!</string>
+    <string name="snackbar_upload_multi_content" formatted="false">%d files uploaded!</string>
 
     <!-- History items -->
     <string name="history_item_open">Open URL</string>
