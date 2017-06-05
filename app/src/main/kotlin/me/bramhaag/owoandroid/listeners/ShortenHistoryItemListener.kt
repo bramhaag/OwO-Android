@@ -25,7 +25,7 @@ class ShortenHistoryItemListener(val url: ShortenUrlAdapter.UrlViewHolder): View
                        v.context.getString(R.string.history_item_copy),
                        v.context.getString(R.string.history_item_open_shortened),
                        v.context.getString(R.string.history_item_copy_shortened))
-                .itemsCallback { _, _, _, text ->
+                .itemsCallback { dialog, _, _, text ->
                     when(text) {
                         v.context.getString(R.string.history_item_open) -> {
                             startActivity(v.context, Intent(Intent.ACTION_VIEW, Uri.parse(url.originalUrl.toString())), null)
@@ -42,7 +42,11 @@ class ShortenHistoryItemListener(val url: ShortenUrlAdapter.UrlViewHolder): View
                             Toast.makeText(v.context, v.context.getString(R.string.copied_to_clipboard), Toast.LENGTH_SHORT).show()
                         }
                     }
-                }.show()
+
+                    dialog.dismiss()
+                }
+                .autoDismiss(false)
+                .show()
 
         return true
     }

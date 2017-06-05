@@ -19,7 +19,7 @@
 
     <CheckBoxPreference android:key="acra.disable"
                         android:title="Send crash logs"
-                        android:summary="Enable or diable ACRA for crash log collection"
+                        android:summary="Enable or disable ACRA for crash log collection"
                         android:defaultValue="true"/>
 
 </PreferenceScreen>

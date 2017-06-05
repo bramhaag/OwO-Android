@@ -20,7 +20,7 @@ class UploadHistoryItemListener(val file: UploadFileAdapter.FileViewHolder): Vie
     override fun onLongClick(v: View): Boolean {
         MaterialDialog.Builder(v.context)
                 .items(v.context.getString(R.string.history_item_open), v.context.getString(R.string.history_item_copy))
-                .itemsCallback { _, _, _, text ->
+                .itemsCallback { dialog, _, _, text ->
                     when (text) {
                         v.context.getString(R.string.history_item_open) -> {
                             startActivity(v.context, Intent(Intent.ACTION_VIEW, Uri.parse(file.url.toString())), null)
@@ -30,7 +30,10 @@ class UploadHistoryItemListener(val file: UploadFileAdapter.FileViewHolder): Vie
                             Toast.makeText(v.context, v.context.getString(R.string.copied_to_clipboard), Toast.LENGTH_SHORT).show()
                         }
                     }
+
+                    dialog.dismiss()
                 }
+                .autoDismiss(false)
                 .show()
 
         return true
