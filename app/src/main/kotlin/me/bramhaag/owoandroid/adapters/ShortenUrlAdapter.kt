@@ -41,7 +41,5 @@ class ShortenUrlAdapter(var urls: List<ShortenHistoryItem>, var context: Context
             itemView.setOnClickListener(ShortenHistoryItemListener(this))
             itemView.setOnLongClickListener(ShortenHistoryItemListener(this))
         }
-
-
     }
 }

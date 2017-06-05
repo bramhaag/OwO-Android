@@ -41,12 +41,12 @@ class MainActivity : AppCompatActivity() {
         val key = PreferenceManager.getDefaultSharedPreferences(this).getString("pref_key", null)
         if(key == null || key.isBlank()) {
             MaterialDialog.Builder(this)
-                    .title("Welcome")
-                    .content("Please enter your OwO API key to continue")
-                    .positiveText("Continue")
+                    .title(getString(R.string.dialog_welcome_title))
+                    .content(getString(R.string.dialog_welcome_content))
+                    .positiveText(getString(R.string.dialog_button_continue))
                     .inputType(InputType.TYPE_CLASS_TEXT)
-                    .input("Enter your OwO Key here", null, false, { _, _ -> })
-                    .checkBoxPrompt("Send crash logs", true, { _, isChecked -> PreferenceManager.getDefaultSharedPreferences(this@MainActivity).edit().putBoolean("acra.disable", isChecked).apply() })
+                    .input(getString(R.string.dialog_welcome_input), null, false, { _, _ -> })
+                    .checkBoxPrompt(getString(R.string.dialog_welcome_checkbox), true, { _, isChecked -> PreferenceManager.getDefaultSharedPreferences(this@MainActivity).edit().putBoolean("acra.disable", isChecked).apply() })
                     .onPositive { dialog, _ ->
                         val prefKey = dialog.inputEditText?.text.toString()
                         PreferenceManager.getDefaultSharedPreferences(this@MainActivity).edit().putString("pref_key", prefKey).apply()

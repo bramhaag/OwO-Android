@@ -58,7 +58,7 @@ class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
     }
 
     fun upload(uri: Uri, index: Int, total: Int) {
-        dialog.setTitle("Uploading... (${index + 1}/$total)")
+        dialog.setTitle(activity.getString(R.string.dialog_upload_title, index + 1, total))
 
         val requestFile = ProgressRequestBody(uri, dialog)
         val requestPart = MultipartBody.Part.createFormData("files[]", requestFile.name, requestFile)
@@ -77,6 +77,7 @@ class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
                 if(call.isCanceled || !response.isSuccessful) {
                     dialog.dismiss()
 
+                    @Suppress("DEPRECATION")
                     MaterialDialog.Builder(activity)
                             .title(R.string.error_title)
                             .content(
@@ -103,11 +104,11 @@ class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
 
                 dialog.dismiss()
                 if(total > 1) {
-                    Snackbar.make(activity.findViewById(R.id.main_scroll_view), "$total files uploaded!", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(activity.findViewById(R.id.main_scroll_view), activity.getString(R.string.snackbar_upload_multi_content, total), Snackbar.LENGTH_LONG).show()
                 } else {
                     val url = Uri.parse("https://owo.whats-th.is/" + obj.getString("url"))
 
-                    Snackbar.make(activity.findViewById(R.id.main_scroll_view), "1 file uploaded", Snackbar.LENGTH_LONG)
+                    Snackbar.make(activity.findViewById(R.id.main_scroll_view), activity.getString(R.string.snackbar_upload_single_content), Snackbar.LENGTH_LONG)
                             .setAction(R.string.dialog_open_file, { ContextCompat.startActivity(activity, Intent(Intent.ACTION_VIEW, url), null) })
                             .show()
 

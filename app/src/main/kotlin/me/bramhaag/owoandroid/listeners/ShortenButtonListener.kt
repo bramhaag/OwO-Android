@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.Color
 import android.text.Html
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -28,18 +29,18 @@ class ShortenButtonListener(val activity: MainActivity): View.OnClickListener {
             Pattern.CASE_INSENSITIVE
     )!!
 
-    override fun onClick(v: View?) {
+    override fun onClick(v: View) {
         val shortenDialogBuilder = MaterialDialog.Builder(activity)
-                .title("Shorten URL")
-                .input("Input URL", null, false, { _, _ -> })
-                .negativeText("Cancel")
-                .positiveText("Shorten")
+                .title(v.context.getString(R.string.dialog_shorten_title))
+                .input(v.context.getString(R.string.dialog_shorten_input), null, false, { _, _ -> })
+                .negativeText(v.context.getString(R.string.dialog_button_cancel))
+                .positiveText(v.context.getString(R.string.dialog_button_shorten))
 
         val resultDialogBuilder = MaterialDialog.Builder(activity)
-                .title("Shortened URL")
-                .content("Loading...")
-                .negativeText("Close")
-                .neutralText("Copy")
+                .title(v.context.getString(R.string.dialog_shorten_result_title))
+                .content(v.context.getString(R.string.dialog_shorten_result_content))
+                .negativeText(v.context.getString(R.string.dialog_button_close))
+                .neutralText(v.context.getString(R.string.dialog_button_copy))
 
         shortenDialogBuilder.onPositive({ dialog, _ ->
             var url = dialog.inputEditText?.text.toString()
@@ -50,9 +51,9 @@ class ShortenButtonListener(val activity: MainActivity): View.OnClickListener {
 
             if(!URL_PATTERN.matcher(url).matches()) {
                 dialog.builder
-                        .content("Invalid URL")
+                        .content(v.context.getString(R.string.dialog_shorten_error_content))
                         .contentColor(Color.RED)
-                        .input("Input URL", url, false, { _, _ -> })
+                        .input(v.context.getString(R.string.dialog_shorten_input), url, false, { _, _ -> })
                         .show()
 
                 return@onPositive
@@ -62,7 +63,7 @@ class ShortenButtonListener(val activity: MainActivity): View.OnClickListener {
                 val input = dialog.inputEditText?.text
 
                 (activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).primaryClip = ClipData.newPlainText(input, input)
-                Toast.makeText(activity, "Copied to clipboard!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, v.context.getString(R.string.copied_to_clipboard), Toast.LENGTH_SHORT).show()
             }).show()
 
             resultDialog.getActionButton(DialogAction.NEUTRAL).isEnabled = false
@@ -70,6 +71,7 @@ class ShortenButtonListener(val activity: MainActivity): View.OnClickListener {
             activity.owo.service.shorten(url).enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     if(call.isCanceled || !response.isSuccessful) {
+                        @Suppress("DEPRECATION")
                         MaterialDialog.Builder(activity)
                                 .title(R.string.error_title)
                                 .content(
@@ -91,8 +93,9 @@ class ShortenButtonListener(val activity: MainActivity): View.OnClickListener {
                     activity.mRecycleViewManager.addUrl(URL(url), URL(shortenedUrl), Date())
                 }
 
-                override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.e("Shorten error:", t.message)
+                    t.printStackTrace()
                 }
 
             })

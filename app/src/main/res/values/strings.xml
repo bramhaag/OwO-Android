@@ -39,6 +39,40 @@
         <b>Error message:</b> %s]]>
     </string>
 
+    <!-- Dialogs -->
+    <string name="dialog_welcome_title">Welcome</string>
+    <string name="dialog_welcome_content">Please enter your OwO API key to continue</string>
+    <string name="dialog_welcome_input">Enter your OwO Key here</string>
+    <string name="dialog_welcome_checkbox">Send crash logs</string>
+
+    <string name="dialog_shorten_title">Shorten URL</string>
+    <string name="dialog_shorten_input">Input URL</string>
+
+    <string name="dialog_shorten_result_title">Shortened URL</string>
+    <string name="dialog_shorten_result_content">Loading…</string>
+
+    <string name="dialog_shorten_error_content">Invalid URL</string>
+    <string name="dialog_upload_title">Uploading… (%d / %d)</string>
+
+    <string name="dialog_button_continue">Continue</string>
+    <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_button_shorten">Shorten</string>
+    <string name="dialog_button_close">Close</string>
+    <string name="dialog_button_copy">Copy</string>
+
+    <!-- Snackbars -->
+    <string name="snackbar_upload_single_content">1 file uploaded</string>
+    <string name="snackbar_upload_multi_content">%d files uploaded!</string>
+
+    <!-- History items -->
+    <string name="history_item_open">Open URL</string>
+    <string name="history_item_copy">Copy URL</string>
+    <string name="history_item_open_shortened">Open shortened URL</string>
+    <string name="history_item_copy_shortened">Copy shortened URL</string>
+
+    <!-- ACRA -->
+    <string name="crash_toast_text">OwO Uploader has crashed</string>
+
     <!-- General settings -->
     <string name="pref_header_general">General</string>
 
@@ -47,6 +81,5 @@
 
     <string name="pref_title_dark_theme">Dark Theme</string>
     <string name="pref_description_dark_theme">Enable or disable the dark theme</string>
-    <string name="crash_toast_text">OwO Uploader has crashed</string>
     <string name="menu_item_delete">Delete</string>
 </resources>

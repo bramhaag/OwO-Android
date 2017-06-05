@@ -1,6 +1,7 @@
 package me.bramhaag.owoandroid.data.urls
 
 import android.provider.BaseColumns
+import me.bramhaag.owoandroid.data.files.FilesContract
 
 class UrlContract {
 
@@ -11,7 +12,7 @@ class UrlContract {
                 "${UrlEntry.COLUMN_NAME_SHORTENED_URL} TEXT," +
                 "${UrlEntry.COLUMN_NAME_DATE} INTEGER)"
 
-        //TODO remove url history
+        val SQL_DELETE_ENTRY = "DELETE FROM ${FilesContract.FileEntry.TABLE_NAME} WHERE ${FilesContract.FileEntry.COLUMN_NAME_URL} = %s"
         val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS ${UrlEntry.TABLE_NAME}"
 
         val SQL_GET_URLS = "SELECT * FROM ${UrlEntry.TABLE_NAME}"
