@@ -95,7 +95,8 @@ class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
 
                 mUploadQueue.removeFirst()
                 val obj = JSONObject(response.body()?.string()).getJSONArray("files").getJSONObject(0)
-                activity.mRecycleViewManager.addFile(obj.getString("name"), URL("${PreferenceManager.getDefaultSharedPreferences(activity).getString("pref_destination", "https://owo.whats-th.is")}/${obj.getString("url")}"), Date())
+                val url = URL("${PreferenceManager.getDefaultSharedPreferences(activity).getString("pref_destination", "https://owo.whats-th.is")}/${obj.getString("url")}")
+                activity.mRecycleViewManager.addFile(obj.getString("name"), url, Date())
 
                 if(mUploadQueue.isNotEmpty()) {
                     upload(mUploadQueue.first, index + 1, total)
@@ -106,10 +107,8 @@ class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
                 if(total > 1) {
                     Snackbar.make(activity.findViewById(R.id.main_scroll_view), activity.getString(R.string.snackbar_upload_multi_content, total), Snackbar.LENGTH_LONG).show()
                 } else {
-                    val url = Uri.parse("https://owo.whats-th.is/" + obj.getString("url"))
-
                     Snackbar.make(activity.findViewById(R.id.main_scroll_view), activity.getString(R.string.snackbar_upload_single_content), Snackbar.LENGTH_LONG)
-                            .setAction(R.string.dialog_open_file, { ContextCompat.startActivity(activity, Intent(Intent.ACTION_VIEW, url), null) })
+                            .setAction(R.string.dialog_open_file, { ContextCompat.startActivity(activity, Intent(Intent.ACTION_VIEW, Uri.parse(url.toString())), null) })
                             .show()
 
                     (activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).primaryClip = ClipData.newPlainText(url.toString(), url.toString())
