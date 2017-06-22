@@ -64,7 +64,7 @@ class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
 
         val requestFile = ProgressRequestBody(uri, dialog)
         val requestPart = MultipartBody.Part.createFormData("files[]", requestFile.name, requestFile)
-        val call = activity.owo.service.upload(requestPart)
+        val call = MainActivity.owo.service.upload(requestPart)
 
         dialog.setButton(DialogInterface.BUTTON_NEGATIVE, activity.getString(android.R.string.cancel), { _, _ ->
             call.cancel()
@@ -76,14 +76,14 @@ class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
 
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if(call.isCanceled || !response.isSuccessful) {
+                if (call.isCanceled || !response.isSuccessful) {
                     dialog.dismiss()
 
                     @Suppress("DEPRECATION")
                     MaterialDialog.Builder(activity)
                             .title(R.string.error_title)
                             .content(
-                                    if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
+                                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
                                         Html.fromHtml(activity.getString(R.string.upload_error_message, 200, response.code(), response.errorBody()?.string()), Html.FROM_HTML_MODE_LEGACY)
                                     else
                                         Html.fromHtml(activity.getString(R.string.upload_error_message, 200, response.code(), response.errorBody()?.string()))
@@ -98,13 +98,13 @@ class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
                 val url = URL("${PreferenceManager.getDefaultSharedPreferences(activity).getString("pref_destination", "https://owo.whats-th.is")}/${obj.getString("url")}")
                 activity.mRecycleViewManager.addFile(obj.getString("name"), url, Date())
 
-                if(mUploadQueue.isNotEmpty()) {
+                if (mUploadQueue.isNotEmpty()) {
                     upload(mUploadQueue.first, index + 1, total)
                     return
                 }
 
                 dialog.dismiss()
-                if(total > 1) {
+                if (total > 1) {
                     Snackbar.make(activity.findViewById(R.id.main_scroll_view), activity.getString(R.string.snackbar_upload_multi_content, total), Snackbar.LENGTH_LONG).show()
                 } else {
                     Snackbar.make(activity.findViewById(R.id.main_scroll_view), activity.getString(R.string.snackbar_upload_single_content), Snackbar.LENGTH_LONG)
@@ -121,22 +121,4 @@ class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
             }
         })
     }
-
-    /*
-    java.lang.NoClassDefFoundError: me.bramhaag.owoandroid.listeners.UploadButtonListener$1
-          at me.bramhaag.owoandroid.listeners.UploadButtonListener.<init>(UploadButtonListener.kt:37)
-          at me.bramhaag.owoandroid.activities.MainActivity.onCreate(MainActivity.kt:61)
-          at android.app.Activity.performCreate(Activity.java:6237)
-          at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1107)
-          at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2369)
-          at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2476)
-          at android.app.ActivityThread.-wrap11(ActivityThread.java)
-          at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1344)
-          at android.os.Handler.dispatchMessage(Handler.java:102)
-          at android.os.Looper.loop(Looper.java:148)
-          at android.app.ActivityThread.main(ActivityThread.java:5417)
-          at java.lang.reflect.Method.invoke(Native Method)
-          at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:726)
-          at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:616)
-     */
 }

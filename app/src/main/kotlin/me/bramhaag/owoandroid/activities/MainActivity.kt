@@ -1,6 +1,7 @@
 package me.bramhaag.owoandroid.activities
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
@@ -17,12 +18,16 @@ import me.bramhaag.owoandroid.listeners.ExpandableLayoutListener
 import me.bramhaag.owoandroid.listeners.ShortenButtonListener
 import me.bramhaag.owoandroid.listeners.UploadButtonListener
 import me.bramhaag.owoandroid.managers.RecyclerViewManager
+import me.bramhaag.owoandroid.services.QuickUploadService
 import me.bramhaag.owoandroid.util.Consumer
 import net.cachapa.expandablelayout.ExpandableLayout
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var owo: OwO
+    companion object {
+        lateinit var owo: OwO
+    }
+
     val resultConsumerMap = HashMap<Int, Consumer<Intent?>>()
 
     lateinit var filesDbHelper: FilesDbHelper
@@ -32,7 +37,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         filesDbHelper = FilesDbHelper(this)
         urlDbHelper = UrlDbHelper(this)
@@ -56,6 +60,18 @@ class MainActivity : AppCompatActivity() {
                     .autoDismiss(true)
                     .show()
         } else owo = OwO(key)
+
+        val data = intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)
+        if(intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM) != null) {
+            val mServiceIntent = Intent(this, QuickUploadService::class.java)
+            mServiceIntent.putExtra(Intent.EXTRA_STREAM, data)
+            this.startService(mServiceIntent)
+
+            finish()
+            return
+        } else {
+            setContentView(R.layout.activity_main)
+        }
 
         findViewById(R.id.upload_button).setOnClickListener(UploadButtonListener(this))
         findViewById(R.id.shorten_button).setOnClickListener(ShortenButtonListener(this))

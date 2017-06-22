@@ -68,7 +68,7 @@ class ShortenButtonListener(val activity: MainActivity): View.OnClickListener {
 
             resultDialog.getActionButton(DialogAction.NEUTRAL).isEnabled = false
 
-            activity.owo.service.shorten(url).enqueue(object : Callback<ResponseBody> {
+            MainActivity.owo.service.shorten(url).enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     if(call.isCanceled || !response.isSuccessful) {
                         @Suppress("DEPRECATION")
