@@ -25,8 +25,7 @@
             android:key="pref_dark_theme"
             android:title="@string/pref_title_dark_theme"
             android:summary="@string/pref_description_dark_theme"
-            android:defaultValue="false"
-            android:enabled="false"/>
+            android:defaultValue="false" />
 
     <CheckBoxPreference android:key="acra.disable"
                         android:title="Send crash logs"
