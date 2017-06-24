@@ -10,9 +10,6 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
 
-        println(applicationInfo.theme)
-        println(resources.getResourceName(applicationInfo.theme))
-
         fragmentManager.beginTransaction()
                 .replace(android.R.id.content, SettingsFragment())
                 .commit()
