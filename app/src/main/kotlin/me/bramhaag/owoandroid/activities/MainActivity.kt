@@ -5,6 +5,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.app.AppCompatDelegate
+import android.support.v7.app.AppCompatDelegate.MODE_NIGHT_NO
+import android.support.v7.app.AppCompatDelegate.MODE_NIGHT_YES
 import android.support.v7.widget.RecyclerView
 import android.text.InputType
 import android.view.Menu
@@ -36,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var mRecycleViewManager: RecyclerViewManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("pref_dark_theme", false)) MODE_NIGHT_YES else MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
 
         filesDbHelper = FilesDbHelper(this)

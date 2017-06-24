@@ -2,6 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword keystore_owoandroid_key_password
+            storeFile file(keystore_owoandroid_location)
+            storePassword Keystore_owoandroid_store_password
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
@@ -11,25 +19,27 @@ android {
         versionCode 1
         versionName "0.2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_6
         sourceCompatibility JavaVersion.VERSION_1_6
     }
-
     lintOptions {
         abortOnError false
     }
-
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
         test.java.srcDirs += 'src/test/java'
+    }
+    productFlavors {
     }
 }
 
@@ -38,26 +48,21 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
     //Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
     //Support
     compile "com.android.support:appcompat-v7:$support_version"
     compile "com.android.support:cardview-v7:$support_version"
     compile "com.android.support:recyclerview-v7:$support_version"
     compile "com.android.support:support-v4:$support_version"
     compile "com.android.support:design:$support_version"
-
     //UI
     compile 'com.github.bumptech.glide:glide:3.8.0'
     compile 'net.cachapa.expandablelayout:expandablelayout:2.9.1'
     compile 'com.afollestad.material-dialogs:core:0.9.4.5'
-
     //Other
-    compile "com.squareup.retrofit2:retrofit:2.3.0"
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'ch.acra:acra:4.9.2'
-
     //Unit testing
     testCompile 'junit:junit:4.12'
 }

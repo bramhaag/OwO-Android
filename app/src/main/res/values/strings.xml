@@ -10,7 +10,7 @@
     <string name="upload_button_text">Upload File(s)</string>
     <string name="shorten_button_text">Shorten URL</string>
 
-    <string name="history_title">Upload History</string>
+    <string name="history_title">History</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_settings">Settings</string>
 
@@ -89,4 +89,6 @@
     <string name="toast_upload_failed">Failed to upload!</string>
     <string name="toast_upload_error">An error occurred!</string>
     <string name="toast_uploading">Uploading…</string>
+    <string name="upload_history">Upload History</string>
+    <string name="shortened_urls_history">Shortened URLs History</string>
 </resources>

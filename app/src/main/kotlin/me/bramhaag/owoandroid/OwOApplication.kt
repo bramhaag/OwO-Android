@@ -21,6 +21,9 @@ class OwOApplication : Application() {
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
-        ACRA.init(this)
+
+        if(!BuildConfig.DEBUG) {
+            ACRA.init(this)
+        }
     }
 }
