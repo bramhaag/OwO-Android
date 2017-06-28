@@ -1,6 +1,6 @@
 package me.bramhaag.owoandroid.util
 
-interface Consumer<T> {
+interface Consumer<in T> {
 
     /**
      * Performs this operation on the given argument.

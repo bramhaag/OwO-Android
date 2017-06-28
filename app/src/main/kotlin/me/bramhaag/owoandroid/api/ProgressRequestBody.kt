@@ -1,7 +1,7 @@
 package me.bramhaag.owoandroid.api
 
-import android.app.ProgressDialog
 import android.content.ContentResolver
+import android.content.Context
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
@@ -11,16 +11,13 @@ import okhttp3.MediaType
 import okhttp3.RequestBody
 import okio.BufferedSink
 import java.io.IOException
-import java.text.DecimalFormat
 
-class ProgressRequestBody(private val mUri: Uri, private val mProgressDialog: ProgressDialog) : RequestBody() {
+class ProgressRequestBody(private val mUri: Uri, mContext: Context, private val mProgressConsumer: ProgressConsumer) : RequestBody() {
 
-    private val mContentResolver: ContentResolver = mProgressDialog.context.contentResolver
+    private val mContentResolver: ContentResolver = mContext.contentResolver
 
     var name: String = "Unknown"
     var size: Long = 0
-
-    private val mDecimalFormat = DecimalFormat("#.##")
 
     init {
         mContentResolver.query(mUri, null, null, null, null).use {
@@ -47,7 +44,6 @@ class ProgressRequestBody(private val mUri: Uri, private val mProgressDialog: Pr
         }
 
         var uploaded: Double = 0.0
-        mProgressDialog.max = contentLength().toInt()
 
         mContentResolver.openInputStream(mUri).use { input ->
             var read: Int
@@ -60,10 +56,13 @@ class ProgressRequestBody(private val mUri: Uri, private val mProgressDialog: Pr
                 sink.write(buffer, 0, read)
 
                 handler.post({
-                    mProgressDialog.progress = uploaded.toInt()
-                    mProgressDialog.setProgressNumberFormat("${mDecimalFormat.format(mByteUnit.convert(uploaded, ByteUnit.BYTE))} ${mByteUnit.unit} / ${mDecimalFormat.format(mByteUnit.convert(contentLength().toDouble(), ByteUnit.BYTE))} ${mByteUnit.unit}")
+                    mProgressConsumer.accept(uploaded, contentLength().toDouble(), mByteUnit)
                 })
             }
         }
+    }
+
+    interface ProgressConsumer {
+        fun accept(progress: Double, max: Double, byteUnit: ByteUnit)
     }
 }

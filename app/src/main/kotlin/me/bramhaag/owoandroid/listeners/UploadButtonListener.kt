@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import me.bramhaag.owoandroid.R
 import me.bramhaag.owoandroid.activities.MainActivity
 import me.bramhaag.owoandroid.api.ProgressRequestBody
+import me.bramhaag.owoandroid.util.ByteUnit
 import me.bramhaag.owoandroid.util.Consumer
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
@@ -24,9 +25,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.net.URL
+import java.text.DecimalFormat
 import java.util.*
 
 class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
+
+    companion object {
+        private val mDecimalFormat = DecimalFormat("#.##")
+    }
 
     private val GALLERY_REQUEST = 0
     private val mUploadQueue = LinkedList<Uri>()
@@ -62,19 +68,27 @@ class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
     fun upload(uri: Uri, index: Int, total: Int) {
         dialog.setTitle(activity.getString(R.string.dialog_upload_title, index + 1, total))
 
-        val requestFile = ProgressRequestBody(uri, dialog)
+        val requestFile = ProgressRequestBody(uri, dialog.context, object: ProgressRequestBody.ProgressConsumer {
+            override fun accept(progress: Double, max: Double, byteUnit: ByteUnit) {
+                dialog.progress = progress.toInt()
+                dialog.setProgressNumberFormat("${mDecimalFormat.format(byteUnit.convert(progress, ByteUnit.BYTE))} ${byteUnit.unit} / ${mDecimalFormat.format(byteUnit.convert(max, ByteUnit.BYTE))} ${byteUnit.unit}")
+            }
+        })
+
+        dialog.max = requestFile.size.toInt()
+
         val requestPart = MultipartBody.Part.createFormData("files[]", requestFile.name, requestFile)
-        val call = MainActivity.owo.service.upload(requestPart)
+        val uploadCall = MainActivity.owo.service.upload(requestPart)
 
         dialog.setButton(DialogInterface.BUTTON_NEGATIVE, activity.getString(android.R.string.cancel), { _, _ ->
-            call.cancel()
+            uploadCall.cancel()
             mUploadQueue.clear()
             dialog.dismiss()
         })
 
         dialog.show()
 
-        call.enqueue(object : Callback<ResponseBody> {
+        uploadCall.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (call.isCanceled || !response.isSuccessful) {
                     dialog.dismiss()
