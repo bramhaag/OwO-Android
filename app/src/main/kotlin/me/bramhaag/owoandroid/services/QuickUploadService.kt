@@ -1,7 +1,6 @@
 package me.bramhaag.owoandroid.services
 
 import android.app.IntentService
-import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ClipData
@@ -109,18 +108,16 @@ class QuickUploadService : IntentService("QuickUploadService") {
 
                 (applicationContext.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).primaryClip = ClipData.newPlainText(url.toString(), url.toString())
 
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url.toString())).apply {
-                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                }
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url.toString()))
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
 
                 notificationManager.notify(id, NotificationCompat.Builder(applicationContext)
                         .setSmallIcon(R.drawable.owo_white)
                         .setContentTitle("Upload completed!")
                         .setColor(Color.rgb(40, 153, 217))
                         .setContentIntent(PendingIntent.getActivity(applicationContext, 0, browserIntent, 0))
-                        .build().apply {
-                            flags = flags or Notification.FLAG_AUTO_CANCEL
-                        }
+                        .setAutoCancel(true)
+                        .build()
                 )
             }
         })
