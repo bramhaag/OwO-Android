@@ -91,4 +91,7 @@
     <string name="toast_uploading">Uploading…</string>
     <string name="upload_history">Upload History</string>
     <string name="shortened_urls_history">Shortened URLs History</string>
+    <string name="notification_uploading">Uploading…</string>
+    <string name="notification_error">Error!</string>
+    <string name="notification_error_verbose">An error occurred while uploading your file!</string>
 </resources>

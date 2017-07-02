@@ -25,6 +25,7 @@ import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.net.URL
 import java.text.DecimalFormat
+import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
 class QuickUploadService : IntentService("QuickUploadService") {
@@ -51,12 +52,14 @@ class QuickUploadService : IntentService("QuickUploadService") {
         val notification = NotificationCompat.Builder(applicationContext)
                 .setOngoing(true)
                 .setSmallIcon(R.drawable.upload)
-                .setContentTitle("Uploading...")
+                .setContentTitle(getString(R.string.notification_uploading))
                 .setProgress(100, 0, true)
 
         val errorNotification = NotificationCompat.Builder(applicationContext)
-                .setContentTitle("Error!")
-                .setContentText("An error occurred while uploading your file!")
+                .setSmallIcon(R.drawable.owo_white)
+                .setColor(Color.RED)
+                .setContentTitle(getString(R.string.notification_error))
+                .setContentText(getString(R.string.notification_error_verbose))
 
         notificationManager.notify(id, notification.build())
 
@@ -111,13 +114,15 @@ class QuickUploadService : IntentService("QuickUploadService") {
                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url.toString()))
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
 
-                notificationManager.notify(id, NotificationCompat.Builder(applicationContext)
+                MainActivity.mRecycleViewManager.addFile(obj.getString("name"), url, Date())
+
+                notificationManager.notify(id,
+                        NotificationCompat.Builder(applicationContext)
                         .setSmallIcon(R.drawable.owo_white)
-                        .setContentTitle("Upload completed!")
+                        .setContentTitle("Uploaded ${requestFile.name}")
                         .setColor(Color.rgb(40, 153, 217))
                         .setContentIntent(PendingIntent.getActivity(applicationContext, 0, browserIntent, 0))
-                        .setAutoCancel(true)
-                        .build()
+                        .setAutoCancel(true).build()
                 )
             }
         })

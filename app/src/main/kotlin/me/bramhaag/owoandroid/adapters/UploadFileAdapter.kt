@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.upload_history_item.view.*
 import me.bramhaag.owoandroid.R
 import me.bramhaag.owoandroid.components.UploadHistoryItem
 import me.bramhaag.owoandroid.listeners.UploadHistoryItemListener
@@ -30,7 +31,7 @@ class UploadFileAdapter(var files: List<UploadHistoryItem>, var context: Context
              holder.url = url
              Glide.with(context)
                      .load(url.toString())
-                     .fitCenter()
+                     .centerCrop()
                      .placeholder(R.drawable.not_found)
                      .into(holder.image)
          }
@@ -44,9 +45,9 @@ class UploadFileAdapter(var files: List<UploadHistoryItem>, var context: Context
 
         init {
             itemView.tag = this
-            title = itemView.findViewById(R.id.upload_item_title) as TextView
-            description = itemView.findViewById(R.id.upload_item_description) as TextView
-            image = itemView.findViewById(R.id.upload_item_image) as ImageView
+            title = itemView.upload_item_title
+            description = itemView.upload_item_description
+            image = itemView.upload_item_image
 
             itemView.setOnClickListener(UploadHistoryItemListener(this))
             itemView.setOnLongClickListener(UploadHistoryItemListener(this))

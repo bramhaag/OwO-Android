@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import kotlinx.android.synthetic.main.shorten_history_item.view.*
 import me.bramhaag.owoandroid.R
 import me.bramhaag.owoandroid.components.ShortenHistoryItem
 import me.bramhaag.owoandroid.listeners.ShortenHistoryItemListener
@@ -35,8 +36,8 @@ class ShortenUrlAdapter(var urls: List<ShortenHistoryItem>, var context: Context
 
         init {
             itemView.tag = this
-            originalUrl = itemView.findViewById(R.id.shorten_item_original_url) as TextView
-            description = itemView.findViewById(R.id.shorten_item_shortened_url) as TextView
+            originalUrl = itemView.shorten_item_original_url
+            description = itemView.shorten_item_shortened_url
 
             itemView.setOnClickListener(ShortenHistoryItemListener(this))
             itemView.setOnLongClickListener(ShortenHistoryItemListener(this))

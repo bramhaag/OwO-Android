@@ -90,7 +90,7 @@ class ShortenButtonListener(val activity: MainActivity): View.OnClickListener {
                     resultDialog.setContent(shortenedUrl)
                     resultDialog.getActionButton(DialogAction.NEUTRAL).isEnabled = true
 
-                    activity.mRecycleViewManager.addUrl(URL(url), URL(shortenedUrl), Date())
+                    MainActivity.mRecycleViewManager.addUrl(URL(url), URL(shortenedUrl), Date())
                 }
 
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

@@ -13,6 +13,7 @@ import android.text.Html
 import android.util.Log
 import android.view.View
 import com.afollestad.materialdialogs.MaterialDialog
+import kotlinx.android.synthetic.main.activity_main.*
 import me.bramhaag.owoandroid.R
 import me.bramhaag.owoandroid.activities.MainActivity
 import me.bramhaag.owoandroid.api.ProgressRequestBody
@@ -110,7 +111,7 @@ class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
                 mUploadQueue.removeFirst()
                 val obj = JSONObject(response.body()?.string()).getJSONArray("files").getJSONObject(0)
                 val url = URL("${PreferenceManager.getDefaultSharedPreferences(activity).getString("pref_destination", "https://owo.whats-th.is")}/${obj.getString("url")}")
-                activity.mRecycleViewManager.addFile(obj.getString("name"), url, Date())
+                MainActivity.mRecycleViewManager.addFile(obj.getString("name"), url, Date())
 
                 if (mUploadQueue.isNotEmpty()) {
                     upload(mUploadQueue.first, index + 1, total)
@@ -119,9 +120,9 @@ class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
 
                 dialog.dismiss()
                 if (total > 1) {
-                    Snackbar.make(activity.findViewById(R.id.main_scroll_view), activity.getString(R.string.snackbar_upload_multi_content, total), Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(activity.main_scroll_view, activity.getString(R.string.snackbar_upload_multi_content, total), Snackbar.LENGTH_LONG).show()
                 } else {
-                    Snackbar.make(activity.findViewById(R.id.main_scroll_view), activity.getString(R.string.snackbar_upload_single_content), Snackbar.LENGTH_LONG)
+                    Snackbar.make(activity.main_scroll_view, activity.getString(R.string.snackbar_upload_single_content), Snackbar.LENGTH_LONG)
                             .setAction(R.string.dialog_open_file, { ContextCompat.startActivity(activity, Intent(Intent.ACTION_VIEW, Uri.parse(url.toString())), null) })
                             .show()
 
