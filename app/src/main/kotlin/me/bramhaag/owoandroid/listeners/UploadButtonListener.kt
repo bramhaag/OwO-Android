@@ -49,7 +49,8 @@ class UploadButtonListener(val activity: MainActivity): View.OnClickListener {
                 }
 
                 if(t?.data != null) mUploadQueue.add(t.data)
-                else if(t?.clipData != null) (0..t.clipData.itemCount - 1).mapTo(mUploadQueue) { t.clipData.getItemAt(it).uri }
+                else if(t?.clipData != null && t.clipData.itemCount != 0) (0..t.clipData.itemCount - 1).mapTo(mUploadQueue) { t.clipData.getItemAt(it).uri }
+                else return
 
                 upload(mUploadQueue.first, 0, mUploadQueue.count())
             }
