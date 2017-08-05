@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:circularbutton="http://schemas.android.com/apk/res-auto"
+
+    tools:context="me.bramhaag.owoandroid.activities.MainActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_main"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorAccent"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/linear_layout_circular_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <me.bramhaag.owoandroid.components.CircularButton
+                android:id="@+id/circular_button_upload"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+
+                circularbutton:image="@drawable/ic_file_upload_white_24dp"
+                circularbutton:backgroundColor="#69f0ae"
+                circularbutton:text="Upload"/>
+
+            <me.bramhaag.owoandroid.components.CircularButton
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+
+                circularbutton:image="@drawable/ic_camera_alt_white_24dp"
+                circularbutton:backgroundColor="#448aff"
+                circularbutton:text="Camera"/>
+
+            <me.bramhaag.owoandroid.components.CircularButton
+                android:id="@+id/circular_button_record"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+
+                circularbutton:image="@drawable/ic_videocam_white_24dp"
+                circularbutton:backgroundColor="#ff5252"
+                circularbutton:text="Record"/>
+
+            <me.bramhaag.owoandroid.components.CircularButton
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+
+                circularbutton:image="@drawable/ic_http_white_24dp"
+                circularbutton:backgroundColor="#607d8b"
+                circularbutton:text="Shorten"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/relative_layout_profiles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/linear_layout_circular_buttons">
+
+            <RelativeLayout
+                android:id="@+id/spinner_upload"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="1dp"
+                android:background="?attr/colorBackgroundFloating">
+
+                <TextView
+                    android:id="@+id/textview_upload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="10dp"
+                    android:text="Upload profile"/>
+
+                <Spinner
+                    android:layout_below="@+id/textview_upload"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:entries="@array/profile_array"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/spinner_shorten"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/spinner_upload"
+                android:layout_marginTop="1dp"
+                android:elevation="1dp"
+                android:background="?attr/colorBackgroundFloating">
+
+                <TextView
+                    android:id="@+id/textview_shorten"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="10dp"
+                    android:text="Shorten profile"/>
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textview_shorten"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:entries="@array/shorten_array"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <TableLayout
+            android:layout_below="@+id/relative_layout_profiles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:background="?attr/colorBackgroundFloating"
+            android:stretchColumns="1"
+            android:elevation="4dp">
+            <TableRow
+                android:layout_margin="10dp">
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_file_upload_white_24dp"
+                    android:tint="#69f0ae"/>
+                <TextView
+                    android:padding="3dip"
+                    android:text="Upload History"/>
+                <TextView
+                    android:gravity="end"
+                    android:padding="3dip"
+                    android:text="120 files uploaded"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_margin="10dp">
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_http_white_24dp"
+                    android:tint="#607d8b"/>
+                <TextView
+                    android:padding="3dip"
+                    android:text="Shortened URL History"/>
+                <TextView
+                    android:padding="3dip"
+                    android:gravity="end"
+                    android:text="300 URLs shortened"/>
+            </TableRow>
+        </TableLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

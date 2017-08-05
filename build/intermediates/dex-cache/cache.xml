@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Android\.android\build-cache\3630c5776ab89dd27f1e190c33769ac19102ec31\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="18d31838aa4fcc768a8a0516e22cc13b94655d89">
+        <dex dex="D:\IntelliJ\public\android\OwOUploader\app\build\intermediates\pre-dexed\debug\classes_172d51a88ab8b2ec8a2f0421c49a01a169473b10.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\IntelliJ\public\android\OwOUploader\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c323c36ecc68965c4cfb460f7721113d2b61ed03">
+        <dex dex="D:\IntelliJ\public\android\OwOUploader\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_5c486e5ceae27567ad073c1d1b946dd597e343bc\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Bram\.gradle\caches\modules-2\files-2.1\org.jetbrains.kotlin\kotlin-stdlib-jre7\1.1.3-2\3fe54c7558c903868351ac79b792d152bca958f2\kotlin-stdlib-jre7-1.1.3-2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3fe54c7558c903868351ac79b792d152bca958f2">
+        <dex dex="D:\IntelliJ\public\android\OwOUploader\app\build\intermediates\pre-dexed\debug\kotlin-stdlib-jre7-1.1.3-2_d020309bb0fd3ce68901f12992deda31e3a8842c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Android\.android\build-cache\1bea569a9749236cc217c0c5c0750980aca6de34\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9935891f23923f39d002087085d9696568a9f657">
+        <dex dex="D:\IntelliJ\public\android\OwOUploader\app\build\intermediates\pre-dexed\debug\classes_526fe9496fd6037ac51151b736d88ca547a57d1e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Android\.android\build-cache\c2d86a16ea7a456224307ac3b66257d36af41f02\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="88246166d5afb106f532f6e6deae683c66b42c89">
+        <dex dex="D:\IntelliJ\public\android\OwOUploader\app\build\intermediates\pre-dexed\debug\classes_91ef3c683026ff7093211ba0c997d4a2fa8a725d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Android\.android\build-cache\7d9855f914fbbc9c3abd5bbfd0fbf456f27e1741\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="fcd01fd11233459f546c437ec927e9b61bf7caf1">
+        <dex dex="D:\IntelliJ\public\android\OwOUploader\app\build\intermediates\pre-dexed\debug\classes_bd5d335b68ae2596d0436aabc40249b7741fa0dc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Bram\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\26.0.0-alpha1\support-annotations-26.0.0-alpha1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="023ee503b631f69511e335a061ea008f8da60f40">
+        <dex dex="D:\IntelliJ\public\android\OwOUploader\app\build\intermediates\pre-dexed\debug\support-annotations-26.0.0-alpha1_9aff3d8a5d42938e0e9bf5e5e9231915ba66b220.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Android\.android\build-cache\42c15d21547eaad1aeace743efae12bf103acc4e\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e176fd06c2ad5b50a2f5cb4de6000a83a7cb48f5">
+        <dex dex="D:\IntelliJ\public\android\OwOUploader\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_d4f1641c1ff96b8f912818f8102ef82316320b42\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\IntelliJ\public\android\OwOUploader\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="690d413709b203bed81c8034e1e970c3c0b0f28c">
+        <dex dex="D:\IntelliJ\public\android\OwOUploader\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_baec61c1e9dd9428d500d6eb95f1ed683f41c8b1\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Android\.android\build-cache\42c15d21547eaad1aeace743efae12bf103acc4e\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e176fd06c2ad5b50a2f5cb4de6000a83a7cb48f5">
+        <dex dex="D:\IntelliJ\public\android\OwOUploader\app\build\intermediates\pre-dexed\debug\classes_d4f1641c1ff96b8f912818f8102ef82316320b42.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Android\.android\build-cache\efea53e2a70b730a87b561fb34036f4879a65e95\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="D:\IntelliJ\public\android\OwOUploader\app\build\intermediates\pre-dexed\debug\classes_0f62a43efe23e39c5a9761c787d8e6f1d07ef46a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Android\.android\build-cache\a1aaa4958957c6cbab4f8b102af5de6608539236\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="952944218ecedea1554a513dec0c14d570642843">
+        <dex dex="D:\IntelliJ\public\android\OwOUploader\app\build\intermediates\pre-dexed\debug\classes_6188be48a421d950f904b4909e532855f1296ace.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Android\.android\build-cache\e0a99a7ca476c5bed424413f580c1369350bdc11\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="8df0e365e40beb151bc42dee20817721a6cab7b0">
+        <dex dex="D:\IntelliJ\public\android\OwOUploader\app\build\intermediates\pre-dexed\debug\classes_44b5e5054759bcb1490fb118d31fca0c105a5f9a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Android\.android\build-cache\ab3f385405dfc6529a8ca6270669dc56b22748b0\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="D:\IntelliJ\public\android\OwOUploader\app\build\intermediates\pre-dexed\debug\classes_6e4d36d4ad9a71ee24073c3f216de42eca29338b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Bram\AppData\Local\Android\sdk\extras\m2repository\com\android\support\constraint\constraint-layout-solver\1.0.2\constraint-layout-solver-1.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="D:\IntelliJ\public\android\OwOUploader\app\build\intermediates\pre-dexed\debug\constraint-layout-solver-1.0.2_6a54c6c12aa31c1af1a383faf370e9646742aca2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Android\.android\build-cache\50a8ca75db6ffb19f278c37109abc4847630f8f1\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="2e92aa0163544a804a0b34f169ca61801770839a">
+        <dex dex="D:\IntelliJ\public\android\OwOUploader\app\build\intermediates\pre-dexed\debug\classes_1a97d0e39f8e8fa2b681c3f6901ac361a59f235a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Bram\.gradle\caches\modules-2\files-2.1\org.jetbrains.kotlin\kotlin-stdlib\1.1.3-2\9b44c139a4ec57031e0c84ba0e49ba16df6d801c\kotlin-stdlib-1.1.3-2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9b44c139a4ec57031e0c84ba0e49ba16df6d801c">
+        <dex dex="D:\IntelliJ\public\android\OwOUploader\app\build\intermediates\pre-dexed\debug\kotlin-stdlib-1.1.3-2_22c24f50300c52d2994980e1c7b9e8c4a7c1e664.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Android\.android\build-cache\98e4739b0e5c17f99613e920e293620d29fa7b7a\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="47471eb19df288158b00b8d9cfa41bce7373f5cc">
+        <dex dex="D:\IntelliJ\public\android\OwOUploader\app\build\intermediates\pre-dexed\debug\classes_96f15072fca03f73779f9105dd224af7a647302a.jar" />
+    </item>
+
+</items>
